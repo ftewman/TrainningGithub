@@ -51,12 +51,13 @@
         android:layout_height="wrap_content"
         android:text="Vnext"/>
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/lvListStatus"
         android:layout_below="@+id/ivUser"
         android:layout_above="@+id/etStatus"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></ListView>
+        android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+
 
     <EditText
         android:id="@+id/etStatus"
