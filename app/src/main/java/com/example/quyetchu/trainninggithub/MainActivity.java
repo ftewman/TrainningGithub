@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.quyetchu.trainninggithub.adapter.UserAdapter;
 import com.example.quyetchu.trainninggithub.entity.User;
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     UserAdapter userAdapter;
     ListView lvListStatus;
     Spinner spUser;
+    TextView tvUsername;
     private RecyclerView recyclerView;
 
     @Override
@@ -30,10 +32,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         userAdapter = new UserAdapter(listUser);
         //lvListStatus = (ListView) findViewById(R.id.lvListStatus);
-        spUser = (Spinner) findViewById(R.id.spListUser);
+        //spUser = (Spinner) findViewById(R.id.spListUser);
         //lvListStatus.setAdapter(userAdapter);
         //spUser.setAdapter(userAdapter);
         cloneData();
+        tvUsername = (TextView) findViewById(R.id.tvName);
+        tvUsername.setText(getIntent().getStringExtra("username"));
         recyclerView = (RecyclerView) findViewById(R.id.lvListStatus);
         userAdapter = new UserAdapter(listUser);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
