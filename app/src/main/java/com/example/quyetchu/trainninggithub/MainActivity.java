@@ -1,5 +1,6 @@
 package com.example.quyetchu.trainninggithub;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.quyetchu.trainninggithub.adapter.UserAdapter;
 import com.example.quyetchu.trainninggithub.entity.User;
@@ -22,28 +24,45 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ListView lvListStatus;
     Spinner spUser;
     TextView tvUsername;
+    ArrayList<String> list;
     private RecyclerView recyclerView;
+    int positionItemList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        userAdapter = new UserAdapter(listUser);
         //lvListStatus = (ListView) findViewById(R.id.lvListStatus);
         //spUser = (Spinner) findViewById(R.id.spListUser);
         //lvListStatus.setAdapter(userAdapter);
         //spUser.setAdapter(userAdapter);
         cloneData();
         tvUsername = (TextView) findViewById(R.id.tvName);
-        tvUsername.setText(getIntent().getStringExtra("username"));
+
+        tvUsername.setText(getIntent().getBundleExtra("bundle").getString("username"));
+//        list = getIntent().getStringArrayListExtra("list");
         recyclerView = (RecyclerView) findViewById(R.id.lvListStatus);
-        userAdapter = new UserAdapter(listUser);
+        userAdapter = new UserAdapter(listUser, this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(userAdapter);
+
+        recyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(this, recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override public void onItemClick(View view, int position) {
+                        positionItemList = position;
+                        Intent intent = new Intent(MainActivity.this, UpdateActivity.class);
+                        intent.putExtra("name", listUser.get(position).getName());
+                        startActivityForResult(intent, 0);
+                    }
+
+                    @Override public void onLongItemClick(View view, int position) {
+                        // do whatever
+                    }
+                })
+        );
 
 
     }
@@ -61,5 +80,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.ibAdd:
 
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (resultCode){
+            case RESULT_OK:
+                String newName = data.getStringExtra("new_name");
+
+                Toast.makeText(MainActivity.this, newName, Toast.LENGTH_SHORT).show();
+                listUser.get(positionItemList).setName(newName);
+                userAdapter.notifyDataSetChanged();
+                break;
+        }
+
     }
 }

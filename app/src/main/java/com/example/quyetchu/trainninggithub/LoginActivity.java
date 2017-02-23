@@ -9,12 +9,16 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
+import java.util.ArrayList;
+
 public class LoginActivity extends AppCompatActivity {
 
     Button btnLogin;
     CheckBox cbRememberMe;
     EditText edtUsername;
     EditText edtPassword;
+
+    ArrayList<String> listDemo = new ArrayList<>();
 
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
@@ -50,8 +54,16 @@ public class LoginActivity extends AppCompatActivity {
 
                 }
                 editor.commit();
+                listDemo.add("1");
+                listDemo.add("2");
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                intent.putExtra("username", username);
+
+//                intent.putExtra("list",listDemo);
+//                intent.putExtra("username", username);
+
+                Bundle bundle = new Bundle();
+                bundle.putString("username", username);
+                intent.putExtra("bundle", bundle);
                 startActivity(intent);
             }
         });

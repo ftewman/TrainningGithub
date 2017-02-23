@@ -25,4 +25,8 @@ public class User {
     public int getIdAvatar() {
         return idAvatar;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }
