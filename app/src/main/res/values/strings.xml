@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">TrainningGithub</string>
     <string name="test">Test</string>
+    <string name="hint_link_download">Link download ...</string>
+    <string name="btn_download">Download</string>
+    <string name="tv_percent_download">0 %</string>
 </resources>

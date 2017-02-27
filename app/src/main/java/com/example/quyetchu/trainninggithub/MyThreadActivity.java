@@ -57,12 +57,15 @@ public class MyThreadActivity extends AppCompatActivity implements View.OnClickL
         Thread th = new Thread(new Runnable() {
             @Override
             public void run() {
+
                 while(true) {
                     SystemClock.sleep(1000);
 
                     Message msg = handler.obtainMessage();
                     msg.arg1 = new Random().nextInt(51) + 50;
                     handler.sendMessage(msg);
+
+
                 }
 
             }
